@@ -1,0 +1,134 @@
+apt-get install apache2 php5 mysql-server ruby git php5-xdebug
+php5-mysql ruby1.9.1 ruby1.9.1-dev libmysqlclient-dev &amp;&amp; gem install
+
+
+sudo apt-get update
+sudo apt-get install apache2
+sudo apt-get install python-setuptools libapache2-mod-wsgi
+sudo service apache2 restart
+sudo apt-get install mysql-server
+
+
+
+--------------https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps----------
+
+sudo apt-get install libapache2-mod-wsgi python-dev   ---1   ggg2
+sudo apt-get install mysql-server                          ---2 
+https://blog.udacity.com/2015/03/step-by-step-guide-install-lamp-linux-apache-mysql-python-ubuntu.html 
+--New password for the MySQL "root" user:                    ---3
+xiaoshen
+mysql -u root -p
+sudo apt-get install apache2                   ---4    ggg1
+sudo service apache2 restart                   ---5
+sudo a2enmod wsgi                              ---6        ggg3
+cd /var/www   --7
+sudo mkdir FlaskApp--8
+cd FlaskApp --9
+sudo mkdir FlaskApp  --10 
+cd FlaskApp  --11
+sudo mkdir static templates --12
+sudo nano __init__.py        --13
+from flask import Flask
+app = Flask(__name__)
+@app.route("/")
+def hello():
+    return "Hello, I love Digital Ocean!"
+if __name__ == "__main__":
+    app.run()
+
+
+####Save and close the file.   --14
+sudo python __init__.py      --15
+
+#It should display “Running on http://localhost:5000/” or "Running on http://127.0.0.1:5000/". If you see this message, you have successfully configured the app.
+sudo nano /etc/apache2/sites-available/FlaskApp.conf    ---16
+<VirtualHost *:80>
+		ServerName 127.0.0.1
+		ServerAdmin amyfan.fan7@gmail.com
+		WSGIScriptAlias / /var/www/FlaskApp/flaskapp.wsgi
+		<Directory /var/www/FlaskApp/FlaskApp/>
+			Order allow,deny
+			Allow from all
+		</Directory>
+		Alias /static /var/www/FlaskApp/FlaskApp/static
+		<Directory /var/www/FlaskApp/FlaskApp/static/>
+			Order allow,deny
+			Allow from all
+		</Directory>
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		LogLevel warn
+		CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+############Save and close the file    --17
+sudo a2ensite FlaskApp   --18 ---sudo a2ensite FlaskApp  ---xiaoshen  --19           1111111111111111
+cd /var/www/FlaskApp   ---20
+sudo nano flaskapp.wsgi    --21
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/FlaskApp/")APACHE_LOG_DIR
+
+from FlaskApp import app as application
+application.secret_key = 'Add your secret key?????????????????'
+################save    --22
+  
+sudo apt install tree   ---23
+Now your directory structure should look like this:
+
+|--------FlaskApp
+|----------------FlaskApp
+|-----------------------static
+|-----------------------templates
+|-----------------------venv
+|-----------------------__init__.py
+|----------------flaskapp.wsgi
+sudo service apache2 restart --24              22222222222222222222
+
+Setup
+Step One— Install and Enable mod_wsgi
+Step Two – Creating a Flask App
+Step Three – Install Flask
+Step Four – Configure and Enable a New Virtual Host
+Step Five – Create the .wsgi File
+Step Six – Restart Apache
+
+I have finished up steps  --25
+sudo service apache2 restart  --26
+cat /var/log/apache2/error.log      --27
+
+###########sqlalchemy mysql example
+
+mysql -u root -p    --28
+show databases;    --29
+CREATE USER 'testlevel'@'localhost' IDENTIFIED BY 'xiaoshen';  --30  #https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql
+GRANT ALL PRIVILEGES ON * . * TO 'testlevel'@'localhost';      --31
+FLUSH PRIVILEGES;                                        --32
+CREATE DATABASE testleveldb;                             --33
+mysql -h localhost -u testlevel -p testleveldb           --34
+show databases;  ----35
+use testleveldb;   ---36
+show tables;        --37
+sudo pip install Flask-SQLAlchemy      --35
+sudo pip install pymysql               -36
+----------------
+https://stackoverflow.com/questions/27766794/switching-from-sqlite-to-mysql-with-flask-sqlalchemy
+https://flask-migrate.readthedocs.io/en/latest/
+upload /home/yfan/Downloads/FlaskApp_levels
+#for level12
+https://github.com
+amyfan.fan7@gmail.com / amyfanfan7/XiaoShen1$
+cunhui.fan7@gmail.com /cunhuifan7/XiaoShen1$
+
+
+cd /var/www/FlaskApp/FlaskApp
+mkvirtualenv testlevel
+deactivate testlevel
+workon testlevel
+git https://github.com/cunhuifan7/testlevel.git /var/www/FlaskApp
+
+git config --global user.name "Cun Hui"
+git config --global user.email cunhui.fan7@gmail.com
+git config --global push.default current
+
+
