@@ -1,0 +1,4 @@
+Flask-SQLAlchemy
+pymysql
+httplib2
+flask

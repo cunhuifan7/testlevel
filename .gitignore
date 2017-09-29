@@ -1,0 +1,14 @@
+*.pyc
+*.xml
+*~
+.idea
+templates/robots.txt
+server/site_settings/*
+!server/site_settings/_TEMPLATE.py
+!server/site_settings/_DRONE.py
+!server/site_settings/__init__.py
+_storage
+trace
+celerybeat-schedule
+debug.log
+static/common/less/site_vars.less
