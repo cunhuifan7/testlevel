@@ -119,7 +119,6 @@ def search1():
 
          langs = [language for language in languages if str(language['name']).lower() == str(proglang).lower()]
          if len(langs) > 0:
-            #return jsonify({langs[0]})
             return jsonify(result=langs[0])
          else:
             return jsonify(result='Try again')
