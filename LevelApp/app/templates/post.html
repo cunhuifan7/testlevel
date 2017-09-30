@@ -11,6 +11,24 @@
 <body>
 
 <div class="container">
+  <h2>Contacts</h2>
+   <ul>
+
+     <li>
+       Name: {{ post.username}}<br>
+       Email: {{ post.email }}
+     </li>
+
+     <hr>
+      {% for post in userAll %}
+         <li>
+             {{ post.id}} Name: {{ post.username}} &&&&&&   Email: {{ post.email }}
+         </li>
+      {% endfor %}
+   </ul>
+</div>
+
+<div class="container">
   <h2>Contact Form</h2>
   <p>The form below contains two input elements:</p>
   <form name="addForm" id="addForm" method="POST" action="{{ url_for('addpost') }}" novalidate>

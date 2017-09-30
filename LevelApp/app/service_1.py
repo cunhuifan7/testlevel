@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import pymysql.cursors
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -73,13 +73,16 @@ user_admin = User.query.filter_by(username='admin').first()
 def index():
     return render_template('index.html')
 
+
 @app.route("/about")
 def about():
     return render_template('about.html')
 
-@app.route("/post")
-def post():
-    return render_template('post.html')
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    user=User.query.filter_by(id=post_id).one()
+    userAll = User.query.all()
+    return render_template('post.html', post=user, userAll=userAll)
 
 
 @app.route('/addpost', methods=['GET', 'POST'])
@@ -89,12 +92,41 @@ def addpost():
     newuser = User(username, email)
     db.session.add(newuser)
     db.session.commit()
-    return render_template('post.html')
+    return redirect(url_for('index')) #render_template('post.html')
 
-languages =[{'name':'Javascript'}, {'name':'Python'}, {'name':'Ruby'}, {'name':'Django'}]
+languages =[{'name':'Javascript'}, {'name':'Python'}, {'name':'Ruby'}, {'name':'Django'},{'name':'C#'}]
 @app.route("/t", methods=['GET'])
 def test():
     return jsonify({'message':'It works!'})
+
+@app.route('/_add_numbers')
+def add_numbers():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', 0, type=int)
+    return jsonify(result=a + b)
+
+@app.route('/search/')
+#@app.route("/search1", methods=['GET'])
+def search():
+    return render_template('search.html')
+
+@app.route('/search1')
+#@app.route("/search1", methods=['GET'])
+def search1():
+    #return render_template('search.html')
+     try:
+         proglang = request.args.get('proglang')
+
+         langs = [language for language in languages if str(language['name']).lower() == str(proglang).lower()]
+         if len(langs) > 0:
+            #return jsonify({langs[0]})
+            return jsonify(result=langs[0])
+         else:
+            return jsonify(result='Try again')
+     except Exception, e:
+         #return(str(e))
+         return render_template('search.html')
+
 
 @app.route('/lang', methods=['GET'])
 def returnAll():

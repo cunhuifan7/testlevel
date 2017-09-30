@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Search{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+
+  <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+      $(function() {
+        $('#process_input').bind('click', function() {
+          $.getJSON($SCRIPT_ROOT + '/search1', {
+            proglang: $('input[name="proglang"]').val(),
+          }, function(data) {
+            $("#result").text(data.result.name);
+          });
+          return false;
+        });
+      });
+    </script>
+
+{% endblock %}
+{% block content %}
+  <h1>Search</h1>
+
+  <div>
+      <input type=text size=5 name=proglang>
+      <button id=process_input class='btn btn-defalt' >Search Languag</button>
+  </div>
+  <p class="important">
+    Welcome on my awesome search.<br>
+    Search Result:    <span id=result>?</span>
+
+
+{% endblock %}
